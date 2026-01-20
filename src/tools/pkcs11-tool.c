@@ -1364,8 +1364,8 @@ int main(int argc, char * argv[])
 	if (do_list_interfaces)
 		list_interfaces();
 
-	fprintf(stderr,"[DEBUG] sizeof(p11) = %d\n",sizeof(p11));
-	fprintf(stderr,"[DEBUG] p11.C_Initialize = %d\n",&p11->C_Initialize);
+	fprintf(stderr,"[DEBUG] sizeof(p11) = %zd\n",sizeof(p11));
+	fprintf(stderr,"[DEBUG] p11.C_Initialize = %d\n",&(p11->C_Initialize));
 
 	fprintf(stderr,"[DEBUG] Going to call C_Initialize [#1]\n");
 
