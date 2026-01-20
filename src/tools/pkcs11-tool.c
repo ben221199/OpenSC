@@ -1354,15 +1354,23 @@ int main(int argc, char * argv[])
 		if (module == NULL)
 			util_fatal("Failed to load pkcs11 module");
 		p11 = (CK_FUNCTION_LIST_3_0_PTR) p11_v2;
+
+		fprintf(stderr,"[DEBUG] Module loaded without problems\n");
 	}
+
+	fprintf(stderr,"[DEBUG] Before possibly listing interfaces\n");
 
 	/* This can be done even before initialization */
 	if (do_list_interfaces)
 		list_interfaces();
 
-	fprintf(stderr,"[DEBUG] Going to call C_Initialize\n");
+	fprintf(stderr,"[DEBUG] p11 = %s\n",p11);
+
+	fprintf(stderr,"[DEBUG] Going to call C_Initialize [#1]\n");
 
 	rv = p11->C_Initialize(c_initialize_args_ptr);
+
+	fprintf(stderr,"[DEBUG] Having called C_Initialize [#1]\n");
 
 #if defined(_WIN32) || defined(HAVE_PTHREAD)
 	if (do_test_threads || rv != CKR_OK)
