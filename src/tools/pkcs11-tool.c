@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -74,6 +75,24 @@
 #include "pkcs11/pkcs11.h"
 #include "pkcs11_uri.h"
 #include "util.h"
+
+void hexdump(void *ptr, int buflen) {
+  unsigned char *buf = (unsigned char*)ptr;
+  int i, j;
+  for (i=0; i<buflen; i+=16) {
+    printf("%06x: ", i);
+    for (j=0; j<16; j++)
+      if (i+j < buflen)
+        printf("%02x ", buf[i+j]);
+      else
+        printf("   ");
+    printf(" ");
+    for (j=0; j<16; j++)
+      if (i+j < buflen)
+        printf("%c", isprint(buf[i+j]) ? buf[i+j] : '.');
+    printf("\n");
+  }
+}
 
 /* pkcs11-tool uses libopensc routines that do not use an sc_context
  * but does use some OpenSSL routines
@@ -1365,7 +1384,8 @@ int main(int argc, char * argv[])
 		list_interfaces();
 
 	fprintf(stderr,"[DEBUG] sizeof(p11) = %zd\n",sizeof(p11));
-	fprintf(stderr,"[DEBUG] p11.C_Initialize = %d\n",&(p11->C_Initialize));
+	fprintf(stderr,"[DEBUG] p11.C_Initialize =\n");
+	hexdump(p11,sizeof(p11));
 
 	fprintf(stderr,"[DEBUG] Going to call C_Initialize [#1]\n");
 
