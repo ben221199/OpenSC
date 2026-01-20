@@ -1384,8 +1384,18 @@ int main(int argc, char * argv[])
 		list_interfaces();
 
 	fprintf(stderr,"[DEBUG] sizeof(p11) = %zd\n",sizeof(p11));
-	fprintf(stderr,"[DEBUG] p11.C_Initialize =\n");
+	fprintf(stderr,"[DEBUG] p11 =\n");
 	hexdump(p11,sizeof(p11));
+	fprintf(stderr,"\n")
+
+	if(p11!==NULL){
+		fprintf(stderr,"[DEBUG] sizeof(*p11) = %zd\n",sizeof(*p11));
+        	fprintf(stderr,"[DEBUG] *p11 =\n");
+        	hexdump(*p11,sizeof(*p11));
+        	fprintf(stderr,"\n")
+	}else{
+		fprintf(stderr,"[DEBUG] p11 is NULL\n");
+	}
 
 	fprintf(stderr,"[DEBUG] Going to call C_Initialize [#1]\n");
 
