@@ -1385,13 +1385,13 @@ int main(int argc, char * argv[])
 
 	fprintf(stderr,"[DEBUG] sizeof(p11) = %zd\n",sizeof(p11));
 	fprintf(stderr,"[DEBUG] p11 =\n");
-	hexdump(p11,sizeof(p11));
+	hexdump(&p11,sizeof(p11));
 	fprintf(stderr,"\n");
 
 	if (p11 != NULL) {
 		fprintf(stderr,"[DEBUG] sizeof(*p11) = %zd\n",sizeof(*p11));
         	fprintf(stderr,"[DEBUG] *p11 =\n");
-        	hexdump(*p11,sizeof(*p11));
+        	hexdump(&(*p11),sizeof(*p11));
         	fprintf(stderr,"\n");
 	} else {
 		fprintf(stderr,"[DEBUG] p11 is NULL\n");
