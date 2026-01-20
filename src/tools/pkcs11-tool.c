@@ -1360,6 +1360,8 @@ int main(int argc, char * argv[])
 	if (do_list_interfaces)
 		list_interfaces();
 
+	fprintf(stderr,"[DEBUG] Going to call C_Initialize\n");
+
 	rv = p11->C_Initialize(c_initialize_args_ptr);
 
 #if defined(_WIN32) || defined(HAVE_PTHREAD)
@@ -9699,6 +9701,8 @@ static CK_SESSION_HANDLE test_kpgen_certwrite(CK_SLOT_ID slot, CK_SESSION_HANDLE
 		util_fatal("Failed to load pkcs11 module");
 	p11 = (CK_FUNCTION_LIST_3_0_PTR ) p11_v2;
 
+	fprintf(stderr,"[DEBUG] Going to call C_Initialize [#2]\n");
+
 	rv = p11->C_Initialize(c_initialize_args_ptr);
 	if (rv == CKR_CRYPTOKI_ALREADY_INITIALIZED)
 		printf("\n*** Cryptoki library has already been initialized ***\n");
@@ -9862,6 +9866,7 @@ static void test_fork(void)
 
 	if (!pid) {
 		printf("*** Calling C_Initialize in forked child process ***\n");
+		fprintf(stderr,"[DEBUG] Going to call C_Initialize [#3]\n");
 		rv = p11->C_Initialize(c_initialize_args_ptr);
 		if (rv != CKR_OK)
 			p11_fatal("C_Initialize in child\n", rv);
@@ -10757,6 +10762,7 @@ static void * test_threads_run(void * pttd)
 			/* IN - C_Initialize with NULL args */
 			if (*(pctest + 1) == 'N') {
 				fprintf(stderr, "Test thread %d C_Initialize(NULL)\n", ttd->tnum);
+				fprintf(stderr,"[DEBUG] Going to call C_Initialize [#4]\n");
 				rv = p11->C_Initialize(NULL);
 				fprintf(stderr, "Test thread %d C_Initialize returned %s\n", ttd->tnum, CKR2Str(rv));
 			}
